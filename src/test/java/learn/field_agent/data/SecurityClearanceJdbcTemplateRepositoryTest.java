@@ -23,6 +23,10 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindAllExisting() {
+    }
+
+    @Test
     void shouldFindById() {
         SecurityClearance secret = new SecurityClearance(1, "Secret");
         SecurityClearance topSecret = new SecurityClearance(2, "Top Secret");
@@ -35,5 +39,21 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
 
         actual = repository.findById(3);
         assertEquals(null, actual);
+    }
+
+    @Test
+    void shouldAddValid() {
+    }
+
+    @Test
+    void shouldNotAddInvalid() {
+    }
+
+    @Test
+    void shouldUpdateExisting() {
+    }
+
+    @Test
+    void shouldNotUpdateExisting() {
     }
 }
