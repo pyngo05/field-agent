@@ -27,15 +27,17 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public List<SecurityClearance> findAll() {
+//        final String sql = "select security_clearance_id, name security_clearance_name "
+//                + "from security clearance limit 1000;";
         final String sql = "select security_clearance_id, name security_clearance_name "
-                + "from security clearance limit 1000;";
+                + "from security_clearance limit 1000;";
         return jdbcTemplate.query(sql, new SecurityClearanceMapper());
     }
 
     @Override
     public SecurityClearance findById(int securityClearanceId) {
 
-        final String sql = "select security_clearance_id, name security_clearance_name "
+        final String sql = "select security_clearance_id, name "
                 + "from security_clearance "
                 + "where security_clearance_id = ?;";
 
@@ -47,14 +49,17 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
     @Override
     public SecurityClearance add(SecurityClearance securityClearance) {
 
-        final String sql = "insert into security_clearance (security_clearance_id, name security_clearance_name ) "
-                + " values (?,?);";
+//        final String sql = "insert into security_clearance (security_clearance_id, name security_clearance_name ) "
+//                + " values (?,?);";
+
+        final String sql = "insert into security_clearance (name ) "
+                + " values (?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, String.valueOf(securityClearance.getSecurityClearanceId()));
-            ps.setString(2, securityClearance.getName());
+            //ps.setString(1, String.valueOf(securityClearance.getSecurityClearanceId()));
+            ps.setString(1, securityClearance.getName());
             return ps;
         }, keyHolder);
 
