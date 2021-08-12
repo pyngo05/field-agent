@@ -10,6 +10,16 @@ insert into agency(agency_id, short_name, long_name) values
         (10, 'CHERUB', 'Intelligence agency that employs children'),
         (11, 'Alpha Protocol', 'A clandestine United States agency which has unlimited resources to conduct covert operations on behalf of the government');
 
+insert into agency_agent(agency_id, agent_id, identifier, security_clearance_id, activation_date, is_active) values
+        (4,1),
+        (5,6 ),
+        (7,3 ),
+        (8,2 ),
+        (9,10),
+        (10,11),
+        (11,5),
+
+
 insert into security_clearance(security_clearance_id, name) values
         (5, 'Baseline Personnel Security Standard'),
         (6, 'Counter Terrorist Check'),
@@ -34,24 +44,24 @@ insert into mission(mission_id, code_name, notes, start_date, projected_end_date
          (2, 'Operation Power Geyser', 'counter-terrorism effort involving a group of 13,000 top-secret commandos', '2423-01-07', '2423-04-05', '2423-06-17', 16667899.00, 11),
          (3, 'Operation All-American Tiger', 'search and clear farms and villages to capture a handful of insurgent leaders', '2043-12-04', '2043-12-05', '2043-12-29', 12334599.00, 10),
          (4, 'Operation Beast-Master', 'uncover seven weapon caches', '2023-01-01', '2023-01-05', '2023-01-11', 55567899.00, 6),
-         (5, 'Operation Mincemeat', 'lure enemies toward minefields', '2023-01-01', '2023-01-05', '2023-01-11', 12365499.00, 5),
+         (5, 'Operation Mincemeat', 'lure enemies toward minefields', '2023-01-01', '2023-01-05', '2023-01-11', 12365499.00, 1),
          (6, 'Operation Beaver Cage', 'helicopter assault to capture enemies', '2023-01-01', '2023-01-05', '2023-01-11', 98767899.00, 7),
          (7, 'Operation Safe Market', 'make residential neighborhoods, marketplaces, and areas of traffic congestion safer', '2023-01-01', '2023-01-05', '2023-01-11', 12343599.00, 8),
-         (8, 'Operation Magneto', 'secure an unconditional surrender of enemies', '2023-01-01', '2023-01-05', '2023-01-11', 12344899.00, 6),
+         (8, 'Operation Magneto', 'secure an unconditional surrender of enemies', '2023-01-01', '2023-01-05', '2023-01-11', 12344899.00, 4),
          (9, 'Operation Toenails', 'major offensive to secure enemy land', '2023-01-01', '2023-01-05', '2023-01-11', 34567777.00, 9),
-         (10, 'Operation Frequent Wind', 'helicopter evacuation of civilians', '2023-01-01', '2023-01-05', '2023-01-11', 12345888.00, 2),
+         (10, 'Operation Frequent Wind', 'helicopter evacuation of civilians', '2023-01-01', '2023-01-05', '2023-01-11', 12345888.00, 12),
          (11, 'Operation Lion Cub', 'Christmas donation drive', '2023-01-01', '2023-01-05', '2023-01-11', 14569999.00, 3),
-         (12, 'Operation Gimlet Victory', 'counterinsurgency operation', '2023-01-01', '2023-01-05', '2023-01-11', 23422899.00, 2);
+         (12, 'Operation Gimlet Victory', 'counterinsurgency operation', '2023-01-01', '2023-01-05', '2023-01-11', 23422899.00, 6);
 
 insert into mission_agent(mission_id, agent_id) values
-         (12,8),
-         (10,7),
-         (10,6),
-         (12,5),
-         (10,4),
-         (11,3),
-         (11,2),
-         (11,1);
+         (1,11),
+         (2,10),
+         (3,9),
+         (4,5),
+         (5,4),
+         (6,3),
+         (7,2),
+         (8,1);
 
 insert into location(location_id, name, address, city, region, country_code, postal_code, agency_id) values
          (1, 'White Horse', '22 White Horse Lane', 'London', 'AL', 'UK', 'AL2 1JR', 11),

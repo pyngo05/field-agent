@@ -1,17 +1,12 @@
 package learn.field_agent.data;
 
-import learn.field_agent.data.mappers.AgentMapper;
 import learn.field_agent.data.mappers.SecurityClearanceMapper;
-import learn.field_agent.models.Agent;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -27,8 +22,6 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public List<SecurityClearance> findAll() {
-//        final String sql = "select security_clearance_id, name security_clearance_name "
-//                + "from security clearance limit 1000;";
         final String sql = "select security_clearance_id, name security_clearance_name "
                 + "from security_clearance limit 1000;";
         return jdbcTemplate.query(sql, new SecurityClearanceMapper());
@@ -36,8 +29,7 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public SecurityClearance findById(int securityClearanceId) {
-
-        final String sql = "select security_clearance_id, name "
+        final String sql = "select security_clearance_id, name security_clearance_name "
                 + "from security_clearance "
                 + "where security_clearance_id = ?;";
 
@@ -48,10 +40,6 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     public SecurityClearance add(SecurityClearance securityClearance) {
-
-//        final String sql = "insert into security_clearance (security_clearance_id, name security_clearance_name ) "
-//                + " values (?,?);";
-
         final String sql = "insert into security_clearance (name ) "
                 + " values (?);";
 
@@ -75,16 +63,16 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
     public boolean update(SecurityClearance securityClearance) {
 
         final String sql = "update security_clearance set "
-                + "security_clearance_id = ?, "
-                + "name = ?, ";
+                + "name = ? "
+                + " where security_clearance_id = ?;";
 
         return jdbcTemplate.update(sql,
                 securityClearance.getName(),
                 securityClearance.getSecurityClearanceId()) > 0;
     }
 
-//    @Override
-//    public boolean deleteById(int securityClearanceId) {
-//        return false;
-//    }
+    @Override
+    public boolean deleteById(int securityClearanceId) {
+        return false;
+    }
 }

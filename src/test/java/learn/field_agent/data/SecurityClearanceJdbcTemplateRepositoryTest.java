@@ -5,11 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SecurityClearanceJdbcTemplateRepositoryTest {
+
+    final static int NEXT_SECURITY_CLEARANCE_ID = 3;
 
     @Autowired
     SecurityClearanceJdbcTemplateRepository repository;
@@ -23,7 +26,10 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindAllExisting() {
+    void shouldFindAll() {
+        List<SecurityClearance> securityClearances = repository.findAll();
+        assertNotNull(securityClearances);
+        assertTrue(securityClearances.size() > 0);
     }
 
     @Test
@@ -43,17 +49,24 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddValid() {
-    }
-
-    @Test
-    void shouldNotAddInvalid() {
+        SecurityClearance securityClearance = makeSecurityClearance();
+        SecurityClearance actual = repository.add(securityClearance);
+        assertNotNull(actual);
+        assertEquals(NEXT_SECURITY_CLEARANCE_ID, actual.getSecurityClearanceId());
     }
 
     @Test
     void shouldUpdateExisting() {
+        SecurityClearance securityClearance = makeSecurityClearance();
+        securityClearance.setSecurityClearanceId(1);
+        assertTrue(repository.update(securityClearance));
+
     }
 
-    @Test
-    void shouldNotUpdateExisting() {
+    SecurityClearance makeSecurityClearance() {
+        SecurityClearance securityClearance = new SecurityClearance();
+        securityClearance.setName("Test Security Clearance");
+        return securityClearance;
     }
+
 }
