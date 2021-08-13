@@ -1,8 +1,13 @@
 package learn.field_agent.data;
 
+import learn.field_agent.data.mappers.AgencyAgentMapper;
+import learn.field_agent.data.mappers.AgencyAgentMapperII;
+import learn.field_agent.data.mappers.SecurityClearanceMapper;
 import learn.field_agent.models.AgencyAgent;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository {
@@ -11,6 +16,14 @@ public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository 
 
     public AgencyAgentJdbcTemplateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+//    find by security_clearance_id, return true if found
+    @Override
+    public List<AgencyAgent> findNotNullSecurityClearanceId() {
+        final String sql = "select security_clearance_id "
+                + "from agency_agent where security_clearance_id is not null;";
+        return jdbcTemplate.query(sql, new AgencyAgentMapperII());
     }
 
     @Override
