@@ -2,7 +2,10 @@ package learn.field_agent.domain;
 
 import learn.field_agent.data.AliasRepository;
 import learn.field_agent.models.Alias;
+import learn.field_agent.models.SecurityClearance;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AliasService {
@@ -13,8 +16,12 @@ public class AliasService {
         this.repository = repository;
     }
 
-    public Alias findById(int agentId) {
-        return repository.findById(agentId);
+    public List<Alias> findById(int agentId) {
+        return repository.findAliasesById(agentId);
+    }
+
+    public List<Alias> findAll() {
+        return repository.findAll();
     }
 
     public Result<Alias> add(Alias alias) {
@@ -23,8 +30,8 @@ public class AliasService {
             return result;
         }
 
-        if (alias.getAliasId() != 0) {
-            result.addMessage("aliasId cannot be set for `add` operation", ResultType.INVALID);
+        if (alias.getAliasId() == 0) {
+            result.addMessage("Alias Id cannot be set for `add` operation", ResultType.INVALID);
             return result;
         }
 
@@ -67,14 +74,19 @@ public class AliasService {
         // Name is required
         if (Validations.isNullOrBlank(alias.getName())) {
             result.addMessage("name is required", ResultType.INVALID);
+            return result;
         }
 
         //Persona is not required unless a name is duplicated.
         // The persona differentiates between duplicate names.
-//        if (Validations...) {
-//            result.addMessage("persona is required for duplicate names", ResultType.INVALID);
-//        }
-
+        List<Alias> allAlias = findAll();
+        for (Alias value : allAlias) {
+            if (value.getName().equals(alias.getName())) {
+                if (Validations.isNullOrBlank(alias.getPersona())) {
+                    result.addMessage("persona is required for duplicate names", ResultType.INVALID);
+                }
+            }
+        }
         return result;
     }
 

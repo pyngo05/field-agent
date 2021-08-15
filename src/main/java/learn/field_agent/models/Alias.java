@@ -6,6 +6,7 @@ public class Alias {
     private String name;
     private String persona;
     private int agentId;
+    private Agent agent;
 
     public int getAliasId() {
         return aliasId;
@@ -39,6 +40,8 @@ public class Alias {
         this.agentId = agentId;
     }
 
-
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
 
 }

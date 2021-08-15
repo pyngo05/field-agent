@@ -1,9 +1,7 @@
 package learn.field_agent.controllers;
 
-import learn.field_agent.domain.AgentService;
 import learn.field_agent.domain.SecurityClearanceService;
 import learn.field_agent.domain.Result;
-import learn.field_agent.models.Agent;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

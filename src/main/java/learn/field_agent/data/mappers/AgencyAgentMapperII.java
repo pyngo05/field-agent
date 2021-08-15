@@ -12,10 +12,10 @@ public class AgencyAgentMapperII  implements RowMapper<AgencyAgent> {
     public AgencyAgent mapRow(ResultSet resultSet, int i) throws SQLException {
 
         AgencyAgent agencyAgent = new AgencyAgent();
-        agencyAgent.setAgencyId(resultSet.getInt("agency_id"));
-        agencyAgent.setIdentifier(resultSet.getString("identifier"));
-        agencyAgent.setActivationDate(resultSet.getDate("activation_date").toLocalDate());
-        agencyAgent.setActive(resultSet.getBoolean("is_active"));
+//        agencyAgent.setAgencyId(resultSet.getInt("agency_id"));
+//        agencyAgent.setIdentifier(resultSet.getString("identifier"));
+//        agencyAgent.setActivationDate(resultSet.getDate("activation_date").toLocalDate());
+//        agencyAgent.setActive(resultSet.getBoolean("is_active"));
 
         SecurityClearanceMapperII securityClearanceMapper = new SecurityClearanceMapperII();
         agencyAgent.setSecurityClearance(securityClearanceMapper.mapRow(resultSet, i));

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api/alias")
@@ -19,8 +21,8 @@ public class AliasController {
     }
 
     @GetMapping("/{agentId}")
-    public ResponseEntity<Alias> findById(@PathVariable int agentId) {
-        Alias alias = service.findById(agentId);
+    public ResponseEntity<List<Alias>> findById(@PathVariable int agentId) {
+        List<Alias> alias = service.findById(agentId);
         if (alias == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -1,8 +1,6 @@
 package learn.field_agent.domain;
 
-import learn.field_agent.models.Agency;
-import learn.field_agent.models.Location;
-import learn.field_agent.models.SecurityClearance;
+import learn.field_agent.models.*;
 import org.junit.jupiter.api.Test;
 import learn.field_agent.data.SecurityClearanceRepository;
 
@@ -12,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -70,18 +68,24 @@ class SecurityClearanceServiceTest {
 
     }
 
-    //TODO FIX BELOW DELETE TESTS
-//    @Test
-//    void shouldNotDeleteSecurityClearanceWithAgencyAgent() {
-//        when(securityClearanceRepository.deleteById(10)).thenReturn(false);
-//        assertFalse(service.deleteById(10));
-//    }
-//
-//    @Test
-//    void shouldDelete() {
-//        when(securityClearanceRepository.deleteById(2)).thenReturn(true);
-//        assertTrue(service.deleteById(2));
-//    }
+    @Test
+    void shouldNotDeleteSecurityClearanceWithAgencyAgent() {
+        SecurityClearance securityClearance = new SecurityClearance();
+        securityClearance.setSecurityClearanceId(10);
+        securityClearance.setName("TESTING");
+
+        AgencyAgent agencyAgent = new AgencyAgent();
+        agencyAgent.setSecurityClearance(securityClearance);
+
+        when(securityClearanceRepository.deleteById(10)).thenReturn(false);
+        assertFalse(service.deleteById(10));
+    }
+
+    @Test
+    void shouldDelete() {
+        when(securityClearanceRepository.deleteById(2)).thenReturn(true);
+        assertTrue(service.deleteById(2));
+    }
 
     SecurityClearance makeSecurityClearance() {
         SecurityClearance securityClearance = new SecurityClearance();

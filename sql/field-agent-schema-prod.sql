@@ -1,6 +1,6 @@
 drop database if exists field_agent;
 create database field_agent;
-use field_agent;ecurity_clearance_name
+use field_agent;
 
 -- create tables and relationships
 create table agency (

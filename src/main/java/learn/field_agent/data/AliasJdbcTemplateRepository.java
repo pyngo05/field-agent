@@ -1,7 +1,9 @@
 package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AliasMapper;
+import learn.field_agent.data.mappers.SecurityClearanceMapper;
 import learn.field_agent.models.Alias;
+import learn.field_agent.models.SecurityClearance;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class AliasJdbcTemplateRepository implements AliasRepository {
@@ -20,15 +25,20 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     }
 
     @Override
-    public Alias findById(int agentId) {
-
-        final String sql = "select alias_id, name, persona, agent_id "
+    public List<Alias> findAliasesById(int agentId) {
+        final String sql = "select alias.alias_id, alias.name, alias.persona, alias.agent_id, agent.first_name, agent.last_name "
                 + "from alias "
-                + "where agent_id = ?;";
+                + "inner join agent on alias.agent_id = agent.agent_id "
+                + "where alias.agent_id = ?;";
 
-        return jdbcTemplate.query(sql, new AliasMapper(), agentId).stream()
-                .findFirst()
-                .orElse(null);
+        return new ArrayList<>(jdbcTemplate.query(sql, new AliasMapper(), agentId));
+    }
+
+    @Override
+    public List<Alias> findAll() {
+        final String sql = "select alias_id, name, persona, agent_id "
+                + "from alias;";
+        return jdbcTemplate.query(sql, new AliasMapper());
     }
 
     @Override

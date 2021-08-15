@@ -153,7 +153,10 @@ insert into security_clearance values
     inner join agent
     where agent.agent_id not in (6, 8)
     and agency.agency_id != 2;
-    
+
+        -- data
+insert into alias values
+	(40, 'Secret', 'Happy', 1);
 
 end //
 -- 4. Change the statement terminator back to the original.

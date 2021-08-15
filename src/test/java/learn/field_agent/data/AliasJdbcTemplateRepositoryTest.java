@@ -1,6 +1,6 @@
 package learn.field_agent.data;
 
-import learn.field_agent.models.Alias;
+import learn.field_agent.models.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +8,10 @@ import learn.field_agent.models.Alias;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class AliasJdbcTemplateRepositoryTest {
@@ -25,21 +29,47 @@ class AliasJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindById() {
-        Alias actual = repository.findById(1);
+        Alias alias = makeAlias();
+        repository.add(alias);
+
+        List<Alias> actual = repository.findAliasesById(1);
+        assertEquals(1, actual.size());
+    }
+
+    @Test
+    void shouldAdd() {
+        Alias alias = new Alias();
+        alias.setAliasId(5);
+        alias.setName("Test2");
+        alias.setPersona("Happy");
+        alias.setAgentId(2);
+        Alias actual = repository.add(alias);
         assertNotNull(actual);
-        assertEquals(1, actual.getAgentId());
-        assertEquals("HQ", actual.getName());
     }
 
     @Test
-    void add() {
+    void shouldUpdate() {
+        Alias alias = new Alias();
+        alias.setAliasId(41);
+        alias.setName("Frankie");
+        alias.setPersona("Happy");
+        alias.setAgentId(1);
+        alias.setAliasId(45);
+        assertTrue(repository.update(alias));
     }
 
     @Test
-    void update() {
+    void shouldDeleteById() {
+        assertTrue(repository.deleteById(1));
     }
 
-    @Test
-    void deleteById() {
+    Alias makeAlias() {
+        Alias alias = new Alias();
+        alias.setAliasId(41);
+        alias.setName("Franco");
+        alias.setPersona("Happy");
+        alias.setAgentId(1);
+        return alias;
     }
+
 }

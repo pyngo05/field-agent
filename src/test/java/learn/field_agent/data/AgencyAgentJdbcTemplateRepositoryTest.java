@@ -58,6 +58,13 @@ class AgencyAgentJdbcTemplateRepositoryTest {
         assertFalse(repository.deleteByKey(1, 3));
     }
 
+    @Test
+    void shouldFindAll() {
+        List<AgencyAgent> agencyAgents = repository.findNotNullSecurityClearanceId();
+        assertNotNull(agencyAgents);
+        assertTrue(agencyAgents.size() > 0);
+    }
+
     AgencyAgent makeAgencyAgent() {
         AgencyAgent agencyAgent = new AgencyAgent();
         agencyAgent.setAgencyId(1);
@@ -76,12 +83,4 @@ class AgencyAgentJdbcTemplateRepositoryTest {
         agencyAgent.setAgent(agent);
         return agencyAgent;
     }
-
-    @Test
-    void shouldFindAll() {
-        List<AgencyAgent> agencyAgents = repository.findNotNullSecurityClearanceId();
-        assertNotNull(agencyAgents);
-        assertTrue(agencyAgents.size() > 0);
-    }
-
 }
