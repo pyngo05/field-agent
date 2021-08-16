@@ -29,11 +29,8 @@ class AliasJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindById() {
-        Alias alias = makeAlias();
-        repository.add(alias);
-
         List<Alias> actual = repository.findAliasesById(1);
-        assertEquals(1, actual.size());
+        assertEquals(2, actual.size());
     }
 
     @Test
@@ -50,17 +47,16 @@ class AliasJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdate() {
         Alias alias = new Alias();
-        alias.setAliasId(41);
+        alias.setAliasId(42);
         alias.setName("Frankie");
         alias.setPersona("Happy");
         alias.setAgentId(1);
-        alias.setAliasId(45);
         assertTrue(repository.update(alias));
     }
 
     @Test
     void shouldDeleteById() {
-        assertTrue(repository.deleteById(1));
+        assertTrue(repository.deleteById(41));
     }
 
     Alias makeAlias() {

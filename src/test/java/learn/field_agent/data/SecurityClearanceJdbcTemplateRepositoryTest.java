@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SecurityClearanceJdbcTemplateRepositoryTest {
 
-    final static int NEXT_SECURITY_CLEARANCE_ID = 3;
+    final static int NEXT_SECURITY_CLEARANCE_ID = 4;
 
     @Autowired
     SecurityClearanceJdbcTemplateRepository repository;
@@ -41,10 +41,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         SecurityClearance actual = repository.findById(1);
         assertEquals(secret, actual);
 
-        actual = repository.findById(2);
-        assertEquals(topSecret, actual);
-
-        actual = repository.findById(3);
+        actual = repository.findById(10);
         assertEquals(null, actual);
     }
 
@@ -59,7 +56,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdateExisting() {
         SecurityClearance securityClearance = makeSecurityClearance();
-        securityClearance.setSecurityClearanceId(1);
+        securityClearance.setSecurityClearanceId(3);
         assertTrue(repository.update(securityClearance));
 
     }

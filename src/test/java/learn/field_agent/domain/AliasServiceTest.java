@@ -6,6 +6,10 @@ import learn.field_agent.data.AliasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +26,7 @@ class AliasServiceTest {
     void shouldAdd() {
         Alias alias = makeAlias();
         Alias mockOut = makeAlias();
+        alias.setAliasId(0);
         mockOut.setAliasId(1);
 
         when(repository.add(alias)).thenReturn(mockOut);
@@ -34,15 +39,16 @@ class AliasServiceTest {
     @Test
     void shouldNotAddWhenInvalid() {
         Alias alias = makeAlias();
+        List<Alias> mockList = new ArrayList<>();
+        mockList.add(alias);
+        when(repository.findAll()).thenReturn(mockList);
         Alias alias2 = new Alias();
         alias2.setName("TEST100");
         alias2.setAgentId(15);
         alias2.setPersona("");
         alias2.setAgent(null);
-        alias2.setAliasId(2);
+        alias2.setAliasId(0);
 
-        Result<Alias> actual = service.add(alias);
-        assertEquals(ResultType.SUCCESS, actual.getType());
         Result<Alias> actual2 = service.add(alias2);
         assertNotEquals(ResultType.SUCCESS, actual2.getType());
 

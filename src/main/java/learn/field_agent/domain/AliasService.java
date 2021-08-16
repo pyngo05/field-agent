@@ -30,7 +30,7 @@ public class AliasService {
             return result;
         }
 
-        if (alias.getAliasId() == 0) {
+        if (alias.getAliasId() != 0) {
             result.addMessage("Alias Id cannot be set for `add` operation", ResultType.INVALID);
             return result;
         }

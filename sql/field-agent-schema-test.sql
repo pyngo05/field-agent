@@ -105,6 +105,8 @@ begin
     delete from agency_agent;
 	delete from agency;
 	alter table agency auto_increment = 1;
+    delete from alias;
+    alter table alias auto_increment = 1;
     delete from agent;
     alter table agent auto_increment = 1;
     delete from security_clearance;
@@ -139,7 +141,8 @@ begin
         -- data
 insert into security_clearance values
 	(1, 'Secret'),
-    (2, 'Top Secret');
+    (2, 'Top Secret'),
+    (3, 'Clearance Edit');
 
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)
@@ -156,8 +159,11 @@ insert into security_clearance values
 
         -- data
 insert into alias values
-	(40, 'Secret', 'Happy', 1);
-
+	(40, 'Secret', 'Happy', 1),
+    (41, 'Secret 2', 'Angry',2),
+    (42, 'Top Secret 2', 'Sad',1);
+    
+    
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;

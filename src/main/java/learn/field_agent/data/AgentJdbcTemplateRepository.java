@@ -2,6 +2,7 @@ package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AgentAgencyMapper;
 import learn.field_agent.data.mappers.AgentMapper;
+import learn.field_agent.data.mappers.AliasMapper;
 import learn.field_agent.models.Agent;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -42,6 +43,7 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
                 .findFirst().orElse(null);
 
         if (agent != null) {
+            addAliases(agent);
             addAgencies(agent);
         }
 
@@ -104,13 +106,30 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
 
         final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
                 + "sc.security_clearance_id, sc.name security_clearance_name, "
+                //maybe delete below line:
+                //+ "al.alias_id, al.name, al.persona, al.agent_id, "
                 + "a.short_name, a.long_name "
                 + "from agency_agent aa "
                 + "inner join agency a on aa.agency_id = a.agency_id "
+                //maybe delete the line below:
+                //+ "inner join alias al on aa.agent_id = al.agent_id "
                 + "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id "
                 + "where aa.agent_id = ?;";
 
         var agentAgencies = jdbcTemplate.query(sql, new AgentAgencyMapper(), agent.getAgentId());
         agent.setAgencies(agentAgencies);
     }
+
+    private void addAliases(Agent agent) {
+
+        final String sql = "select a.first_name, a.middle_name, a.last_name, a.dob, a.height_in_inches, "
+                + "al.alias_id, al.name, al.persona, al.agent_id "
+                + "from agent a "
+                + "inner join alias al on a.agent_id = al.agent_id "
+                + "where al.agent_id = ?;";
+
+        var agentAliases = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
+        agent.setAliases(agentAliases);
+    }
+
 }

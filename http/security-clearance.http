@@ -5,6 +5,9 @@
 GET {{url}} HTTP/1.1
 
 ###
+GET {{url}}/3 HTTP/1.1
+
+###
 
 POST  {{url}} HTTP/1.1
 Content-Type: application/json
@@ -16,14 +19,15 @@ Content-Type: application/json
 
 ###
 
-PUT {{url}}/10 HTTP/1.1
+PUT {{url}}/11 HTTP/1.1
 Content-Type: application/json
 
 {
-        "name": "Testing2"
+        "name": "Top Secret",
+        "securityClearanceId": 11
 
 }
 
 ###
 
-DELETE {{url}}/10 HTTP/1.1
+DELETE {{url}}/11 HTTP/1.1

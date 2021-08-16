@@ -36,8 +36,9 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
 
     @Override
     public List<Alias> findAll() {
-        final String sql = "select alias_id, name, persona, agent_id "
-                + "from alias;";
+        final String sql = "select alias.alias_id, alias.name, alias.persona, alias.agent_id, agent.first_name, agent.last_name "
+                + "from alias "
+                + "inner join agent on alias.agent_id = agent.agent_id;";
         return jdbcTemplate.query(sql, new AliasMapper());
     }
 
@@ -70,12 +71,14 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         final String sql = "update alias set "
                 + "name = ?, "
                 + "persona = ?, "
-                + "agent_id = ?;";
+                + "agent_id = ?" +
+                " where alias_id =?;";
 
         return jdbcTemplate.update(sql,
                 alias.getName(),
                 alias.getPersona(),
-                alias.getAgentId()) > 0;
+                alias.getAgentId(),
+                alias.getAliasId()) > 0;
     }
 
     @Override
